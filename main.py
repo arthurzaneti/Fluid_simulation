@@ -13,8 +13,10 @@ screen = pygame.display.set_mode(size)
 clock = pygame.time.Clock()
 
 particles = []
-for i in range(10):
-    particles.append(random_particle(width, height, 5))
+for i in range(100):
+    particles.append(random_particle(width, height, 10))
+
+particles = set(particles)
 
 while True:
     clock.tick(120)
@@ -23,9 +25,9 @@ while True:
 
     surface = pygame.Surface((1000,1000))
     for p in particles:
-        pygame.draw.circle(surface, p.color, p.pos, 5)
+        pygame.draw.circle(surface, p.color, p.pos, p.radius)
         p.update_pos()
-        p.check_colisions(width, height)
+        p.check_colisions_walls(width, height)
     
     screen.blit(surface, (0, 0))
     pygame.display.flip()
